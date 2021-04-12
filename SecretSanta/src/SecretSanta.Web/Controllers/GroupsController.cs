@@ -37,7 +37,7 @@ namespace SecretSanta.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(UserViewModel viewModel)
+        public IActionResult Edit(GroupViewModel viewModel)
         {
             if (ModelState.IsValid)
             {

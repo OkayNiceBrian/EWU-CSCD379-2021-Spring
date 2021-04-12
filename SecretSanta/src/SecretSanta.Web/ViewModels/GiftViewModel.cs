@@ -10,6 +10,6 @@ namespace SecretSanta.Web.ViewModels
         public string Description {get; set;} = "";
         public string Url {get; set;} = "";
         public uint Priority {get; set;} = 1;
-        public UserViewModel UserReference;
+        public uint UserReference {get; set;}
     }
 }
