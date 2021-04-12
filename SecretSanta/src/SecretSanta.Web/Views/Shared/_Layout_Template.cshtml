@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>SecretSanta - @ViewBag.Title</title>
+        
+        <% for (var filename in htmlWebpackPlugin.files.css) { %>
+        <link href="~<%= htmlWebpackPlugin.files.css[filename] %>" rel="stylesheet" />
+        <% } %>
+
+    </head>
+    <body>
+        <nav class="bg-blue-500">
+            <ul class="flex text-white">
+                <li><a class="inline-block p-6 leading-10 text-x1" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a class="inline-block p-6 leading-10" asp-controller="Users" asp-action="Index">Users</a></li>
+                <li><a class="inline-block p-6 leading-10" asp-controller="Groups" asp-action="Index">Groups</a></li>
+                <li><a class="inline-block p-6 leading-10" asp-controller="Gifts" asp-action="Index">Gifts</a></li>
+            </ul>
+        </nav>
+        @RenderBody()
+
+        <% for (var index in htmlWebpackPlugin.files.js) { %>
+        <script src="~<%= htmlWebpackPlugin.files.js[index] %>"></script>
+        <% } %>
+    </body>
+</html>
