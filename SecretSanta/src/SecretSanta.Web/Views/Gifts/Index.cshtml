@@ -5,13 +5,14 @@
 @{int counter = 0;}
 
 <section class="grid grid-cols-1 sm:grid-cols-3">
-    @foreach(var giftViewModel in Model) {
+    @foreach(var giftViewModel in Model.OrderBy(gift => gift.Priority)) {
         <section class="border-gray-500 border-2 p-6 m-5 rounded-lg">
-            @giftViewModel.Title <a asp-action="Edit" asp-route-id=@counter><i class="fas fa-edit"></i></a><form asp-action="Delete" asp-route-id=@counter method="post">
+            <a class="flex flex-col" asp-action="Edit" asp-route-id=@counter>@giftViewModel.Title</a> 
+            <form asp-action="Delete" asp-route-id=@counter method="post">
                 <button onclick="return confirm('Delete @giftViewModel.Title?');"><i class="fas fa-trash-alt"></i></button>
             </form>
             @{counter++;}
         </section>
     }
 </section>
-<a asp-action="Create">Create</a>
+<section class="m-5"><a asp-action="Create">Create</a></section>
