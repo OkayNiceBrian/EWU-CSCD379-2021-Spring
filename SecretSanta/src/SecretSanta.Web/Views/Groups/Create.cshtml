@@ -4,6 +4,6 @@
 }
 <form asp-controller="Groups" asp-action="Create" method="post">
     @await Html.PartialAsync("_CreateOrEdit")
-    <button>Create</button>
-    <a asp-controller="Groups" asp-action="Index">Cancel</a>
+    <button class=" hover:bg-red-500">Create</button>
+    <a class=" hover:bg-red-500" asp-controller="Groups" asp-action="Index">Cancel</a>
 </form>
