@@ -1,5 +1,9 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using SecretSanta.Api.Dto;
+using SecretSanta.Business;
+using SecretSanta.Data;
 
 namespace SecretSanta.Api.Controllers
 {
@@ -7,38 +11,82 @@ namespace SecretSanta.Api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        private IUserRepository UserRepository {get;}
+
+        public UsersController(IUserRepository userRepository)
+        {
+            UserRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+        }
+
         // /api/users
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<User> Get()
         {
-            return DeleteMe.Users;
+            return UserRepository.List();
         }
 
         // /api/users/<index>
-        [HttpGet("{index}")]
-        public string Get(int index)
+        [HttpGet("{id}")]
+        public ActionResult<User?> Get(int id)
         {
-            return DeleteMe.Users[index];
+            if (id < 0)
+            {
+                return NotFound();
+            }
+            User? returnedUser = UserRepository.GetItem(id);
+            return returnedUser;
         }
 
         //DELETE /api/users/<index>
-        [HttpDelete("{index}")]
-        public void Delete(int index)
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
         {
-            DeleteMe.Users.RemoveAt(index);
+            if (id > 0) 
+            {
+                return NotFound();
+            }
+            if (UserRepository.Remove(id))
+            {
+                return Ok();
+            }
+            return NotFound();
         }
 
         // POST /api/users
         [HttpPost]
-        public void Post([FromBody] string userName)
+        public ActionResult<User?> Post([FromBody] User? myUser)
         {
-            DeleteMe.Users.Add(FirstName);
+            if (myUser is null)
+            {
+                return BadRequest();
+            }
+            return UserRepository.Create(myUser);
         }
 
-        [HttptPut("{index}")]
-        public void Put(int index, [FromBody]string firstName)
+        [HttpPut("{id}")]
+        public ActionResult Put(int id, [FromBody]UpdateUser? updatedUser)
         {
-            DeleteMe.Users[index] = firstName;
+            if (updatedUser is null)
+            {
+                return BadRequest();
+            }
+            User? foundUser = UserRepository.GetItem(id);
+            if (foundUser is not null)
+            {
+                if (!string.IsNullOrWhiteSpace(updatedUser.FirstName))
+                {
+                    foundUser.FirstName = updatedUser.FirstName;
+                }
+
+                if (!string.IsNullOrWhiteSpace(updatedUser.LastName))
+                {
+                    foundUser.FirstName = updatedUser.LastName;
+                }
+
+                UserRepository.Save(foundUser);
+                return Ok();
+            }
+            return NotFound();
         }
     }
 }

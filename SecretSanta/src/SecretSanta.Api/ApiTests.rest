@@ -23,11 +23,15 @@ DELETE {{host}}/api/users/0
 POST {{host}}/api/users
 Content-Type: {{contentType}}
 
-"Brian"
+{
+    "FirstName": Brian, "LastName": Jackson, "id": 22
+}
 
 ###
 
 PUT {{host}}/api/users
 Content-Type: {{contentType}}
 
-"Jared"
+{
+    "FirstName": Jared, "LastName": Bolender, "id": 20
+}
