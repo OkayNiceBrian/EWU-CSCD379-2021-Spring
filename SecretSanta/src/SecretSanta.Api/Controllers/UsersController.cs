@@ -2,6 +2,7 @@
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SecretSanta.Api.Dto;
 using SecretSanta.Business;
 using SecretSanta.Data;
 
