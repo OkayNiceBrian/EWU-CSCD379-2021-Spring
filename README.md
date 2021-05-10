@@ -5,7 +5,7 @@
 
 In this project, we are going to configure continuous integration and continuous deployment.
 Link to branch: https://github.com/OkayNiceBrian/EWU-CSCD379-2021-Spring/tree/Assignment6
-
+Link to site: https://briansecretsanta.azurewebsites.net/
 ![](../../workflows/.NET/badge.svg)
 
 ## Assignment

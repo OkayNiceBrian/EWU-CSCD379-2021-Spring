@@ -92,6 +92,13 @@ module.exports = (env, argv) => {
             //     ]
             // }),
 
+            new CopyWebpackPlugin({
+                patterns: [
+                    { from: 'html', to: distPath, context: srcPath }
+                ]
+            }),
+
+
             new MiniCssExtractPlugin({
                 filename: 'css/[name].[hash].css'
             }),
