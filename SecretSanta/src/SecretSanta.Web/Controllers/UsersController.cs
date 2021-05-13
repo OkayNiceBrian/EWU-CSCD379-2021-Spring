@@ -16,16 +16,17 @@ namespace SecretSanta.Web.Controllers
             UserClient = userClient ?? throw new ArgumentNullException(nameof(userClient));
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var users = await UserClient.GetAllAsync();
-            var userViewModels = users.Select(x => new UserViewModel
-            {
-                Id = x.Id,
-                FirstName = x.FirstName,
-                LastName = x.LastName
-            }).ToList();
-            return View(userViewModels);
+            // var users = await UserClient.GetAllAsync();
+            // var userViewModels = users.Select(x => new UserViewModel
+            // {
+            //     Id = x.Id,
+            //     FirstName = x.FirstName,
+            //     LastName = x.LastName
+            // }).ToList();
+            // return View(userViewModels);
+            return View();
         }
 
         public IActionResult Create()
@@ -52,13 +53,14 @@ namespace SecretSanta.Web.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            User user = await UserClient.GetAsync(id);
-            return View(new UserViewModel
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName
-            });
+            // User user = await UserClient.GetAsync(id);
+            // return View(new UserViewModel
+            // {
+            //     Id = user.Id,
+            //     FirstName = user.FirstName,
+            //     LastName = user.LastName
+            // });
+            return View();
         }
 
         [HttpPost]
