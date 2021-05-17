@@ -1,7 +1,7 @@
 @model List<UserViewModel>
 
 
-<section class="flex flex-wrap mb-6">
+@* <section class="flex flex-wrap mb-6">
     @foreach(var userViewModel in Model) {
         <section class="w-full sm:w-1/3">
             <a asp-action="Edit" asp-route-id=@userViewModel.Id>
@@ -14,7 +14,7 @@
             </a>
         </section>
     }
-</section>
+</section> *@
 
 <section class="flex flex-wrap mb-6" x-data="SecretSanta.setupUsers()" x-init="mounted()">
     <template x-for="(currentUser, index) in users" :key="index">
