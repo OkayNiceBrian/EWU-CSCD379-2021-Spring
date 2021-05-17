@@ -20,17 +20,20 @@ namespace SecretSanta.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Dto.User> Get()
+        public IEnumerable<User> Get()
         {
-            return Repository.List().Select(x => ToDto(x)!);
+            return Repository.List();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Dto.User?> Get(int id)
+        public ActionResult<User?> Get(int id)
         {
-            Dto.User? user = ToDto(Repository.GetItem(id));
-            if (user is null) return NotFound();
-            return user;
+            if (id < 0)
+            {
+                return NotFound();
+            }
+            User? returnedUser = UserManager.GetItem(id);
+            return returnedUser;
         }
 
         [HttpDelete("{id}")]
@@ -48,18 +51,22 @@ namespace SecretSanta.Api.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(Dto.User), (int)HttpStatusCode.OK)]
-        public ActionResult<Dto.User?> Post([FromBody] Dto.User user)
+        public ActionResult<User?> Post([FromBody] User? user)
         {
-            return ToDto(Repository.Create(FromDto(user)!));
+            if (user is null)
+            {
+                return BadRequest();
+            }
+            return Repository.Create(user);
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public ActionResult Put(int id, [FromBody] Dto.UpdateUser? user)
+        public ActionResult Put(int id, [FromBody] UpdateUser? user)
         {
-            Data.User? foundUser = Repository.GetItem(id);
+            User? foundUser = Repository.GetItem(id);
             if (foundUser is not null)
             {
                 foundUser.FirstName = user.FirstName ?? "";
