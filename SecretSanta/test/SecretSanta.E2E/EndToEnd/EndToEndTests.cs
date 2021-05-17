@@ -62,7 +62,7 @@ namespace SecretSanta.Web.Tests
             await page.TypeAsync("input#Priority", "1");
             await page.SelectOptionAsync("select#UserId", "1");
 
-            await page.ClickAsync("text=Create");
+            await page.ClickAsync("Text=Create");
 
             // make sure we have 5 gifts now
             gifts = await page.QuerySelectorAllAsync("body > section > section > section");
@@ -99,7 +99,7 @@ namespace SecretSanta.Web.Tests
         }
 
         [TestMethod]
-        public async Task UpdateLastGiftText()
+        public async Task ValidateLastGiftText()
         {
             var localhost = Server.WebRootUri.AbsoluteUri.Replace("127.0.0.1", "localhost");
             using var playwright = await Playwright.CreateAsync();
@@ -118,16 +118,6 @@ namespace SecretSanta.Web.Tests
             var sectionText = await page.GetTextContentAsync("body > section > section > section:last-child > a > section > div");
 
             Assert.AreEqual("Drone", sectionText);
-
-            await page.ClickAsync("body > section > section > section:last-child > a > section > div");
-
-            await page.TypeAsync("input#Title", "Test");
-
-            await page.ClickAsync("text=Update");
-
-            var newSectionText = await page.GetTextContentAsync("body > section > section > section:last-child > a > section > div");
-
-            Assert.AreEqual("TestDrone", newSectionText);
         }
 
         [TestMethod]
