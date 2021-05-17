@@ -24,7 +24,7 @@ namespace SecretSanta.Api
 
             services.AddCors(options => 
             {
-                options.addDefaultPolicy(builder => {
+                options.AddDefaultPolicy(builder => {
 
                     builder.AllowAnyOrigin()
                             .AllowAnyMethod()
