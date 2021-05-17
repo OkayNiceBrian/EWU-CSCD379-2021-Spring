@@ -8,16 +8,12 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { faAcquisitionsIncorporated, fab } from '@fortawesome/free-brands-svg-icons';
 import axios from 'axios';
 
+import {UsersClient, User} from '../Api/SecretSanta.Api.Client.g';
+
 library.add(fas, far, fab);
 dom.watch();
 
 declare var apiHost: string;
-
-interface User{
-    id: number;
-    firstName: string;
-    lastName: string;
-}
 
 export function setupNav() {
     return {
@@ -48,8 +44,11 @@ export function setupUsers() {
         },
         async loadUsers() {
             try {
-                const response = await axios.get("${apiHost}/api/users"); 
-                this.users = response.data;
+                var client = new UsersClient(`${apiHost}`);
+                this.users = await client.getAll() || [];
+                //const response = await axios.get("${apiHost}/api/users"); 
+                //this.users = response.data;
+                var i = 0;
             } catch (error){
                 console.log(error);
             }
@@ -62,7 +61,9 @@ export function createOrUpdateUser() {
         user: {} as User,
         async create() {
             try {
-                await axios.post("${apiHost}/api/users", this.user);
+                const client = new UsersClient(apiHost);
+                //await axios.post("${apiHost}/api/users", this.user);
+                await client.post(this.user);
                 window.location.href="/users";
             } catch (error) {
                 console.log(error);
@@ -70,7 +71,9 @@ export function createOrUpdateUser() {
         },
         async update() {
             try {
-                await axios.put('${apiHost}/api/users/${this.user.id}', this.user)
+                const client = new UsersClient(apiHost);
+                await client.put(this.user.id, this.user);
+                //await axios.put('${apiHost}/api/users/${this.user.id}', this.user)
                 window.location.href="/users";
             } catch (error) {
                 console.log(error);
@@ -80,8 +83,10 @@ export function createOrUpdateUser() {
             const pathnameSplit = window.location.pathname.split('/');
             const id = pathnameSplit[pathnameSplit.length - 1];
             try {
-                const response = await axios.get('${apiHost}/api/users/${id}');
-                this.user = response.data;
+                const client = new UsersClient(apiHost);
+                this.user = await client.get(+id);
+                //const response = await axios.get('${apiHost}/api/users/${id}');
+                //this.user = response.data;
             } catch (error) {
                 console.log(error);
             }

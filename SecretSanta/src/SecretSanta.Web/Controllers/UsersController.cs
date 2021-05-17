@@ -1,9 +1,11 @@
 using System;
 using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SecretSanta.Web.Api;
 using SecretSanta.Web.ViewModels;
+using SecretSanta.Web.Data;
 
 namespace SecretSanta.Web.Controllers
 {
@@ -34,56 +36,63 @@ namespace SecretSanta.Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(UserViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                await UserClient.PostAsync(new User
-                {
-                    Id = viewModel.Id,
-                    FirstName = viewModel.FirstName,
-                    LastName = viewModel.LastName
-                });
-                return RedirectToAction(nameof(Index));
-            }
+        // [HttpPost]
+        // public async Task<IActionResult> Create(UserViewModel viewModel)
+        // {
+        //     if (ModelState.IsValid)
+        //     {
+        //         await UserClient.PostAsync(new User
+        //         {
+        //             Id = viewModel.Id,
+        //             FirstName = viewModel.FirstName,
+        //             LastName = viewModel.LastName
+        //         });
+        //         return RedirectToAction(nameof(Index));
+        //     }
 
-            return View(viewModel);
-        }
+        //     return View(viewModel);
+        // }
 
-        public async Task<IActionResult> Edit(int id)
+        // public async Task<IActionResult> Edit(int id)
+        // {
+        //     // User user = await UserClient.GetAsync(id);
+        //     // return View(new UserViewModel
+        //     // {
+        //     //     Id = user.Id,
+        //     //     FirstName = user.FirstName,
+        //     //     LastName = user.LastName
+        //     // });
+        //     return View();
+        // }
+
+        public IActionResult Edit(int id)
         {
-            // User user = await UserClient.GetAsync(id);
-            // return View(new UserViewModel
-            // {
-            //     Id = user.Id,
-            //     FirstName = user.FirstName,
-            //     LastName = user.LastName
-            // });
+            // var myEvent = await Client.GetAsync(id);
+            // return View(myEvent);
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Edit(UserViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                await UserClient.PutAsync(viewModel.Id, new UpdateUser
-                {
-                    FirstName = viewModel.FirstName,
-                    LastName = viewModel.LastName
-                });
-                return RedirectToAction(nameof(Index));
-            }
+        // [HttpPost]
+        // public async Task<IActionResult> Edit(UserViewModel viewModel)
+        // {
+        //     if (ModelState.IsValid)
+        //     {
+        //         await UserClient.PutAsync(viewModel.Id, new UpdateUser
+        //         {
+        //             FirstName = viewModel.FirstName,
+        //             LastName = viewModel.LastName
+        //         });
+        //         return RedirectToAction(nameof(Index));
+        //     }
 
-            return View(viewModel);
-        }
+        //     return View(viewModel);
+        // }
 
-        [HttpPost]
-        public async Task<IActionResult> Delete(int id)
-        {
-            await UserClient.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
-        }
+        // [HttpPost]
+        // public async Task<IActionResult> Delete(int id)
+        // {
+        //     await UserClient.DeleteAsync(id);
+        //     return RedirectToAction(nameof(Index));
+        // }
     }
 }
