@@ -17,8 +17,8 @@ namespace SecretSanta.Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IUserRepository, UserRepository>();
-            //services.AddSingleton<IUserRepository, UserRepository>();
+            //services.AddScoped<IUserRepository, UserRepository>();
+            services.AddSingleton<IUserRepository, UserRepository>();
             services.AddControllers();
             services.AddSwaggerDocument();
 
@@ -42,7 +42,7 @@ namespace SecretSanta.Api
             }
 
             app.UseRouting();
-            
+
             app.UseOpenApi();
             app.UseSwaggerUi3();
 

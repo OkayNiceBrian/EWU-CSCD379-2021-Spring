@@ -2,11 +2,12 @@ import '../styles/site.css';
 
 import 'alpinejs';
 
+import axios from 'axios';
+
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { faAcquisitionsIncorporated, fab } from '@fortawesome/free-brands-svg-icons';
-import axios from 'axios';
 
 library.add(fas, far, fab);
 dom.watch();
@@ -48,7 +49,7 @@ export function setupUsers() {
         },
         async loadUsers() {
             try {
-                const response = await axios.get("${apiHost}/api/users"); 
+                const response = await axios.get('${apiHost}/api/users'); 
                 this.users = response.data;
             } catch (error){
                 console.log(error);
@@ -62,7 +63,7 @@ export function createOrUpdateUser() {
         user: {} as User,
         async create() {
             try {
-                await axios.post("${apiHost}/api/users", this.user);
+                await axios.post('${apiHost}/api/users', this.user);
                 window.location.href="/users";
             } catch (error) {
                 console.log(error);
