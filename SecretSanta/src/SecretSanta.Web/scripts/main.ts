@@ -43,13 +43,13 @@ export function setupUsers() {
         },
         async deleteUser(currentUser: User) {
             if (confirm('Are you sure you want to delete ${currentUser.firstName}')){
-                await axios.delete('${apiHost}/api/users/${currentUser.id}');
+                await axios.delete(`${apiHost}/api/users/${currentUser.id}`);
                 await this.loadUsers();
             }
         },
         async loadUsers() {
             try {
-                const response = await axios.get('${apiHost}/api/users'); 
+                const response = await axios.get(`${apiHost}/api/users`); 
                 this.users = response.data;
             } catch (error){
                 console.log(error);
@@ -63,7 +63,7 @@ export function createOrUpdateUser() {
         user: {} as User,
         async create() {
             try {
-                await axios.post('${apiHost}/api/users', this.user);
+                await axios.post(`${apiHost}/api/users`, this.user);
                 window.location.href="/users";
             } catch (error) {
                 console.log(error);
@@ -71,7 +71,7 @@ export function createOrUpdateUser() {
         },
         async update() {
             try {
-                await axios.put('${apiHost}/api/users/${this.user.id}', this.user)
+                await axios.put(`${apiHost}/api/users/${this.user.id}`, this.user)
                 window.location.href="/users";
             } catch (error) {
                 console.log(error);
@@ -81,7 +81,7 @@ export function createOrUpdateUser() {
             const pathnameSplit = window.location.pathname.split('/');
             const id = pathnameSplit[pathnameSplit.length - 1];
             try {
-                const response = await axios.get('${apiHost}/api/users/${id}');
+                const response = await axios.get(`${apiHost}/api/users/${id}`);
                 this.user = response.data;
             } catch (error) {
                 console.log(error);
