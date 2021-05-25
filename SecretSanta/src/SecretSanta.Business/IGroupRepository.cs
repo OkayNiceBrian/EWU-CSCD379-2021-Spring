@@ -9,6 +9,7 @@ namespace SecretSanta.Business
         Group? GetItem(int id);
         bool Remove(int id);
         Group Create(Group item);
+        AddAssignmentResult AddAssignment(int groupId);
         void Save(Group item);
     }
 

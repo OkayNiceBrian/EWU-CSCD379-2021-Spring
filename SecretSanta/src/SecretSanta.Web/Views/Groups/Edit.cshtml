@@ -26,7 +26,7 @@
                     <div class="col-span-2">
                         <i class="fas fa-gift text-gray-700"></i>
                         <i class="fas fa-arrow-right text-gray-700"></i>
-                        <span x-text="getAssignment(user)"></span>
+                        <span x-text="recipients[user.id]"></span>
                     </div>
                 </div>
             </section>
@@ -41,4 +41,5 @@
         <button class="border-1 bg-green-200 border-green-600 hover:bg-green-400 py-2 px-4 rounded-xl mr-3" @@click="addToGroup(group.id)">Add</button>
     </div>
     <a class="inline-block border-2 bg-white border-green-400 hover:border-green-600 py-2 px-4 rounded-xl" asp-controller="Groups" asp-action="Index">Close</a>
+    <button class="inline-block border-2 bg-white border-green-400 hover:border-green-600 py-2 px-4 rounded-xl" @@click.prevent="addAssignments(group.id)">Assign</button>
 </section>
