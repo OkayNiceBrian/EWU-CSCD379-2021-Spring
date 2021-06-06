@@ -1,7 +1,4 @@
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using SecretSanta.Web.Data;
-using SecretSanta.Web.ViewModels;
 
 namespace SecretSanta.Web.Controllers
 {
@@ -21,11 +18,5 @@ namespace SecretSanta.Web.Controllers
         {
             return View();
         }
-
-        /*public IActionResult Gifts(int userId)
-        {
-            var gifts = MockData.Gifts.OrderBy(g => g.Priority).ToList();
-            return View(gifts);
-        }*/
     }
 }

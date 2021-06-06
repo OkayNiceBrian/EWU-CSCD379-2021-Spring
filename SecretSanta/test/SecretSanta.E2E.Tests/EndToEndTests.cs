@@ -56,9 +56,13 @@ namespace SecretSanta.E2E.Tests
             await page.ClickAsync("text=Groups");
             button = await page.WaitForSelectorAsync("a:has-text('Create Group')");
             Assert.IsNotNull(button);
+
+            await page.ClickAsync("text=Gifts");
+            button = await page.WaitForSelectorAsync("a:has-text('Create Gift')");
+            Assert.IsNotNull(button);
         }
 
-        /*[TestMethod]
+        [TestMethod]
         public async Task CreateGift()
         {
             var localhost = _Server.WebRootUri.AbsoluteUri.Replace("127.0.0.1", "localhost");
@@ -147,6 +151,6 @@ namespace SecretSanta.E2E.Tests
             await page.ClickAsync("body > section > section > section:last-child > a > section > form > button");
             gifts = await page.QuerySelectorAllAsync("body > section > section > section");
             Assert.AreEqual(4, gifts.Count());
-        }*/
+        }
     }
 }
