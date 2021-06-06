@@ -88,6 +88,22 @@ export function createOrUpdateUser() {
     }
 }
 
+export function userGifts() {
+    return {
+        user: {} as User,
+        async loadData() {
+            const pathnameSplit = window.location.pathname.split('/');
+            const id = pathnameSplit[pathnameSplit.length - 1];
+            try {
+                const client = new UsersClient(apiHost);
+                this.user = await client.get(+id);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+}
+
 export function setupGroups() {
     return {
         groups: [] as Group[],

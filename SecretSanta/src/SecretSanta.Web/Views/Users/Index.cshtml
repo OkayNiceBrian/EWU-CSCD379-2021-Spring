@@ -5,6 +5,7 @@
                 <section class="border-gray-500 hover:shadow-xl border-2 p-6 m-5 rounded-xl flex flex-row justify-between">
                     <div class="inline-block"><span x-text="currentUser.firstName"></span> <span x-text="currentUser.lastName"></span></div>
                     <button class="-mt-6" @@click.prevent="deleteUser(currentUser)"><i class="fas fa-trash text-gray-700 hover:text-red-700"></i></button>
+                    <!-- div class="inline-block"><a asp-action="Gifts" asp-route-id="`${currentUser.id}`">View Gifts</a></div -->
                 </section>
             </a>
         </section>
