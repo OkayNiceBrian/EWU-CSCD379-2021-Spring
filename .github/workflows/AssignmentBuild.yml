@@ -30,7 +30,7 @@ jobs:
 
     - name: Run API
       working-directory: ./SecretSanta/src/SecretSanta.Api/
-      run: dotnet run
+      run: dotnet build
 
     - name: Restore dependencies
       working-directory: ./SecretSanta/src/SecretSanta.Web/
