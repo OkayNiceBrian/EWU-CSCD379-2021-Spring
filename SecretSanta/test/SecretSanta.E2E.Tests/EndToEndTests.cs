@@ -56,14 +56,10 @@ namespace SecretSanta.E2E.Tests
             await page.ClickAsync("text=Groups");
             button = await page.WaitForSelectorAsync("a:has-text('Create Group')");
             Assert.IsNotNull(button);
-
-            await page.ClickAsync("text=Gifts");
-            button = await page.WaitForSelectorAsync("a:has-text('Create Gift')");
-            Assert.IsNotNull(button);
         }
 
         [TestMethod]
-        public async Task CreateGift()
+        public async Task VerifyGroupCreationAndAssignment()
         {
             var localhost = _Server.WebRootUri.AbsoluteUri.Replace("127.0.0.1", "localhost");
             using var playwright = await Playwright.CreateAsync();
@@ -77,80 +73,40 @@ namespace SecretSanta.E2E.Tests
 
             Assert.IsTrue(response.Ok);
 
-            await page.ClickAsync("text=Gifts");
-
-            var gifts = await page.QuerySelectorAllAsync("body > section > section > section");
-            Assert.AreEqual(4, gifts.Count());
-
+            await page.ClickAsync("text=Users");
+            await page.ClickAsync("text=Create User");
+            await page.TypeAsync("input#FirstName", "Brian");
+            await page.TypeAsync("input#LastName", "Jackson");
             await page.ClickAsync("text=Create");
 
-            await page.TypeAsync("input#Title", "Simple Gift");
-            await page.TypeAsync("input#Description", "Just a simple description");
-            await page.TypeAsync("input#Url", "https://www.somegift.com");
-            await page.TypeAsync("input#Priority", "3");
-            await page.SelectOptionAsync("select#UserId", "2");
-
+            await page.ClickAsync("text=Create User");
+            await page.TypeAsync("input#FirstName", "Vince");
+            await page.TypeAsync("input#LastName", "Mejia");
             await page.ClickAsync("text=Create");
 
-            gifts = await page.QuerySelectorAllAsync("body > section > section > section");
-            Assert.AreEqual(5, gifts.Count());
-        }
+            await page.ClickAsync("text=Create User");
+            await page.TypeAsync("input#FirstName", "Jared");
+            await page.TypeAsync("input#LastName", "Bolender");
+            await page.ClickAsync("text=Create");
 
-        [TestMethod]
-        public async Task ModifyLastGift()
-        {
-            var localhost = _Server.WebRootUri.AbsoluteUri.Replace("127.0.0.1", "localhost");
-            using var playwright = await Playwright.CreateAsync();
-            await using var browser = await playwright.Chromium.LaunchAsync(new LaunchOptions
-            {
-                Headless = false
-            });
+            await page.ClickAsync("text=Groups");
+            await page.ClickAsync("text=Create Group");
+            
+            await page.TypeAsync("input#Name", "Fellas");
+            await page.ClickAsync("text=Create");
 
-            var page = await browser.NewPageAsync();
-            var response = await page.GoToAsync(localhost);
+            await page.ClickAsync(":has-text('Fellas')");
+            await page.SelectOptionAsync("select", "1");
+            await page.ClickAsync("text=Add");
+            await page.SelectOptionAsync("select", "2");
+            await page.ClickAsync("text=Add");
+            await page.SelectOptionAsync("select", "3");
+            await page.ClickAsync("text=Add");
 
-            Assert.IsTrue(response.Ok);
+            await page.ClickAsync("text=Generate Assignments");
 
-            await page.ClickAsync("text=Gifts");
-
-            var sectionText = await page.GetTextContentAsync("body > section > section > section:last-child > a > section > div");
-            Assert.AreEqual("Simple Gift", sectionText);
-
-            await page.ClickAsync("body > section > section > section:last-child");
-
-            await page.ClickAsync("input#Title", clickCount:3); // Select all text in the text box
-            await page.TypeAsync("input#Title", "Updated Gift");
-            await page.ClickAsync("text=Update");
-
-            sectionText = await page.GetTextContentAsync("body > section > section > section:last-child > a > section > div");
-            Assert.AreEqual("Updated Gift", sectionText);
-        }
-
-        [TestMethod]
-        public async Task DeleteLastGift()
-        {
-            var localhost = _Server.WebRootUri.AbsoluteUri.Replace("127.0.0.1", "localhost");
-            using var playwright = await Playwright.CreateAsync();
-            await using var browser = await playwright.Chromium.LaunchAsync(new LaunchOptions
-            {
-                Headless = true
-            });
-
-            var page = await browser.NewPageAsync();
-            var response = await page.GoToAsync(localhost);
-
-            Assert.IsTrue(response.Ok);
-
-            await page.ClickAsync("text=Gifts");
-
-            var gifts = await page.QuerySelectorAllAsync("body > section > section > section");
-            Assert.AreEqual(5, gifts.Count());
-
-            page.Dialog += (_, args) => args.Dialog.AcceptAsync();
-
-            await page.ClickAsync("body > section > section > section:last-child > a > section > form > button");
-            gifts = await page.QuerySelectorAllAsync("body > section > section > section");
-            Assert.AreEqual(4, gifts.Count());
+            var users = await page.QuerySelectorAllAsync("body > section > section");
+            Assert.AreEqual(1, users.Count());
         }
     }
 }
