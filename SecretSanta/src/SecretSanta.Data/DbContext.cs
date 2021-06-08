@@ -31,17 +31,13 @@ namespace SecretSanta.Data
             modelBuilder.Entity<Group>().HasAlternateKey(item => new { item.Name } ); 
             modelBuilder.Entity<User>().HasAlternateKey(item => new { item.FirstName, item.LastName } ); 
             modelBuilder.Entity<Gift>().HasAlternateKey(item => new { item.Title });
-            modelBuilder.Entity<Assignment>().HasAlternateKey(item => new { item.group });
+            //modelBuilder.Entity<Assignment>().HasAlternateKey(item => new { item.groups });
             //.HasName($"{nameof(Event)}.AlternateKey");
             //modelBuilder.Entity<Event>().HasIndex(item => new { item.Date, item.Location }).IsUnique();
 
             modelBuilder.Entity<Group>()
-                .HasOne(gu => gu.Group)
-                .WithMany(a => a.Assignment);
-
-            modelBuilder.Entity<Assignment>()
-                .HasOne(a => a.Assignment)
-                .WithMany(g => g.Group);
+                .HasMany(g => g.Assignments)
+                .WithMany(a => a.groups);
         }
     }
 }

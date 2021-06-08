@@ -10,10 +10,11 @@ namespace SecretSanta.Data
         public User Receiver { get; }
         public List<Group> groups { get; } = new();
 
-        public Assignment(User giver, User recipient)
+        private Assignment() { throw new NotSupportedException(nameof(Assignment)+"()"); }
+        public Assignment(User giver, User receiver)
         {
             Giver = giver ?? throw new ArgumentNullException(nameof(giver));
-            Receiver = recipient ?? throw new ArgumentNullException(nameof(recipient));
+            Receiver = receiver ?? throw new ArgumentNullException(nameof(receiver));
         }
     }
 }
