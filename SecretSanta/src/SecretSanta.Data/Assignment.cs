@@ -8,7 +8,7 @@ namespace SecretSanta.Data
         public int Id { get; set; }
         public User Giver { get; }
         public User Receiver { get; }
-        public Group group { get; set; }
+        public List<Group> groups { get; } = new();
 
         public Assignment(User giver, User recipient)
         {

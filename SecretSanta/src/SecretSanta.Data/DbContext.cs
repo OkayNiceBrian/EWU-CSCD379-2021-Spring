@@ -34,6 +34,14 @@ namespace SecretSanta.Data
             modelBuilder.Entity<Assignment>().HasAlternateKey(item => new { item.group });
             //.HasName($"{nameof(Event)}.AlternateKey");
             //modelBuilder.Entity<Event>().HasIndex(item => new { item.Date, item.Location }).IsUnique();
+
+            modelBuilder.Entity<Group>()
+                .HasOne(gu => gu.Group)
+                .WithMany(a => a.Assignment);
+
+            modelBuilder.Entity<Assignment>()
+                .HasOne(a => a.Assignment)
+                .WithMany(g => g.Group);
         }
     }
 }
